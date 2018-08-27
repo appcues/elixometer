@@ -328,6 +328,10 @@ defmodule Elixometer do
     end
   end
 
+  def update_time(name, units, elapsed_us) when is_number(elapsed_us) do
+    Updater.timer(name, units, elapsed_us)
+  end
+
   def add_counter(metric_name, ttl_millis) do
     GenServer.cast(__MODULE__, {:add_counter, metric_name, ttl_millis})
   end

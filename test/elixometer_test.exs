@@ -246,6 +246,14 @@ defmodule ElixometerTest do
     assert ns > 1_000_000
   end
 
+  test "a timer can be set directly" do
+    update_time("direct", :microseconds, 1)
+
+    assert subscription_exists?("elixometer.test.timers.direct")
+    [{_data_point, value}] = Reporter.value_for("elixometer.test.timers.direct", 99)
+    assert value == 1
+  end
+
   @tag elixir: 1.5
   test "a bodyless timer defined in a module raises a RuntimeError" do
     on_exit(fn ->
